@@ -39,7 +39,7 @@ qnn1 = TwoLayerQNN(num_qubits=num_inputs, quantum_instance=qi)
 
 # set up PyTorch module
 initial_weights = 0.1*(2*np.random.rand(qnn1.num_weights) - 1)
-model1 = TorchConnector(qnn1, initial_weights=initial_weights)
+model1 = TorchConnector(qnn1, initial_weights=initial_weights)  
 
 # define optimizer and loss
 optimizer = LBFGS(model1.parameters())
