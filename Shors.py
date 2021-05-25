@@ -7,6 +7,8 @@ from math import gcd
 from numpy.random import randint
 import pandas as pd
 from fractions import Fraction
+from qiskit import *
+import math
 
 def swap(qubit1, qubit2):
     circuit = cirq.Circuit()
@@ -35,6 +37,26 @@ def QFT(qubits):
 
     return circuit
 
+from qiskit import *
+import math
+
+
+def qft(n):
+    # quantum fourier transform in qiskit 
+    circuit = QuantumCircuit()
+    qr = QuantumRegister(size=n)
+    circuit.add_register(qr)
+    for j in range(n):
+        circuit.h(qr[j])
+        for k in range(j+1, n):
+            circuit.cp(math.pi / float(2**(k-j)), qr[k], qr[j])
+        circuit.barrier()
+    circuit.draw()
+    return circuit
+
+
+
+
 def Shor(qubits):
     circuit = cirq.Circuit()
 
@@ -49,7 +71,8 @@ if __name__ == "__main__":
     import numpy as np
     np.set_printoptions(linewidth = 180)
     qubits = [cirq.GridQubit(0,i) for i in range(3)]
-    circuit = QFT(qubits)
+    n = 10 
+    circuit = qft(n)
     print_circuit = lambda circuit : "  " + (str(circuit).replace('\n','\n  ') if len(circuit) > 0 else "<<This circuit contains no gates.>>")
     print("We will be checking whether the correct 3-qubit quantum Fourier transform is constructed.")
     print("The circuit you constructed is:")
